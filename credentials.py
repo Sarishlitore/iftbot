@@ -1,5 +1,0 @@
-bot_token = '5338663358:AAHilkMcfDrvmcm-le2oGwKSY2k-v2-58K8'
-bot_user_name = 'Indeed First Telegram Bot'
-URL = 'https://telebot5182022.herokuapp.com/'
-my_channel_id = '-1001500201081'
-my_bot_id = '699878147'
