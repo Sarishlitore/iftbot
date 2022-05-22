@@ -1,5 +1,12 @@
-bot_token = '5338663358:AAHilkMcfDrvmcm-le2oGwKSY2k-v2-58K8'
-bot_user_name = 'Indeed First Telegram Bot'
-URL = 'https://telebot5182022.herokuapp.com/'
-my_channel_id = '-1001500201081'
-my_bot_id = '699878147'
+import os
+from os.path import join, dirname
+
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), 'credentials.env')
+load_dotenv(dotenv_path)
+bot_token = os.environ.get('BOT_TOKEN')
+my_channel_id = os.environ.get('MY_CHANNEL_ID')
+host = os.environ.get('HOST')
+user = os.environ.get('USER')
+password = os.environ.get('PASSWORD')

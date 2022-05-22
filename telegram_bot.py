@@ -1,11 +1,12 @@
-import telebot
-import telegram
-from telebot import types
+from telebot import TeleBot, types
+from typing import List
 
-from credentials import bot_token
+import credentials
+from db import DataBase
 
-bot = telebot.TeleBot(bot_token)
-saved_books: list[str] = []
+db = DataBase(credentials.host, credentials.user, credentials.password)
+
+bot = TeleBot(credentials.bot_token)
 
 
 @bot.message_handler(commands=['start'])
@@ -37,32 +38,31 @@ def message_reply(message):
     elif message.text == "Удалить книгу":
         bot.register_next_step_handler(message, delete_book)
     elif message.text == "Список сохраненных книг":
-        bot.reply_to(message, show_saved_books(), parse_mode=telegram.ParseMode.MARKDOWN, )
+        bot.reply_to(message, show_saved_books(), parse_mode="Markdown", )
     else:
-        bot.send_message(my_channel_id, message.text)
+        bot.send_message(credentials.my_channel_id, message.text)
 
 
 def save_book(message):
     try:
         book_name = message.text
-        saved_books.append(book_name)
+        db.save_book(book_name)
     except Exception as e:
         bot.reply_to(message, e.__str__())
-    print(saved_books)
 
 
 def delete_book(message):
     try:
         book_name = message.text
-        saved_books.remove(book_name)
+        db.delete_book(book_name)
     except Exception as e:
         bot.reply_to(message, e.__str__())
-    print(saved_books)
 
 
 def show_saved_books() -> str:
     text = "Сохраненные книги:\n"
-    for book in saved_books:
+    books = db.show_books()
+    for book in books:
         text += "\n`" + book + '`'
     return text
 
@@ -71,5 +71,4 @@ def show_available_commands() -> str:
     commands = ['start', 'help', 'chat_id']
     return "Доступные комманды /" + " /".join(commands)
 
-
-bot.polling(none_stop=True)
+# bot.polling(none_stop=True)
