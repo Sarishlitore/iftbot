@@ -1,10 +1,9 @@
 from telebot import TeleBot, types
-from typing import List
 
 import credentials
 from db import DataBase
 
-db = DataBase(credentials.host, credentials.user, credentials.password)
+db = DataBase(credentials.db_host, credentials.db_user, credentials.db_password)
 
 bot = TeleBot(credentials.bot_token)
 
@@ -71,4 +70,5 @@ def show_available_commands() -> str:
     commands = ['start', 'help', 'chat_id']
     return "Доступные комманды /" + " /".join(commands)
 
-# bot.polling(none_stop=True)
+
+bot.polling(none_stop=True)

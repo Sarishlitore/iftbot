@@ -11,7 +11,8 @@ class DataBase:
 
     def __connect(self):
         try:
-            self.connection = connect(host=self.__host, user=self.__user, password=self.__password, database="booksdb")
+            self.connection = connect(host=self.__host, user=self.__user, password=self.__password,
+                                      database="cf19571_booksdb")
         except Error as e:
             print(e)
 
